@@ -1,5 +1,27 @@
-# Mapping -----------------------------------------------------------------
 
+# Note that there is NO need to run this file as this R script is to perform some
+# initial testing on mapping using leaflet R package
+# 
+# File: 0_test_map.R
+# 
+# Date: 2021-01-17
+# 
+# Developer: Kevin Chang
+#  
+# This purpose of R script is to perform some initial testing on mapping
+# using leaflet R package.
+
+
+
+# Load the file for mapping -----------------------------------------------
+
+
+ships_fulldat <- readRDS("rds/ships_fulldat.rds")
+ships_stats_dat <- readRDS("rds/ships_stats_dat.rds")
+
+
+# Mapping -----------------------------------------------------------------
+library(tidyverse)
 library(leaflet)
 
 vessel <- "652"

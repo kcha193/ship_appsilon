@@ -1,5 +1,22 @@
 
-# This file is to trim down the 400MB data
+# Note that there is NO need to run this file as the data has already processed 
+# and saved0 in the "rds" folder.  
+# 
+# File: 0_get_data.R
+# 
+# Date: 2021-01-17
+# 
+# Developer: Kevin Chang
+#  
+# This purpose of R script is to download, unzip and tidy-up the data for the 
+# shiny app. The idea is to trim down the initial 400MB CSV file to several  
+# different RDS files with smaller in the file size, so it is easier to be 
+# uploaded to github for version control and the shinyapp.io for shiny hosting.
+# 
+# This file is purely served as a reference for the other developers to further 
+# modify the data for the shiny app, as currently I only extract the variables
+# I need.
+
 
 library(tidyverse)
 
