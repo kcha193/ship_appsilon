@@ -1,6 +1,17 @@
 
 
+# Packages that users need to install -------------------------------------
+pkg <- c("shiny", "shiny.semantic", "semantic.dashboard", "leaflet", 
+         "googledrive", "tidyverse")
 
+new_pkg <- pkg[!pkg %in% installed.pacakges()]
+
+if(length(new_pkg) > 0) {
+  install.packages(new_pkg)
+}
+
+
+# Shiny app starts here ---------------------------------------------------
 
 library(shiny)
 library(shiny.semantic)

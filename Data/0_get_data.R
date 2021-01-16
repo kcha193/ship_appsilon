@@ -20,6 +20,8 @@ dat <- data.table::fread("raw/ships.csv") %>% as_tibble()
 unlink("raw/ships.csv")
 
 
+# Variables description ---------------------------------------------------
+
 # LAT - ship’s latitude
 # LON - ship’s longitude
 # SPEED - ship’s speed in knots
@@ -43,7 +45,7 @@ unlink("raw/ships.csv")
 
 # Data clean up -----------------------------------------------------------
 
-# Manual fixing some names
+# Manual fixing some ship names
 dat$SHIPNAME[grep(". PRINCE OF WAVES", dat$SHIPNAME)] <- "PRINCE OF WAVES"
 dat$SHIPNAME[grep(".WLA-311", dat$SHIPNAME)] <- "WLA-311"
 
