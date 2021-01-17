@@ -14,13 +14,12 @@ dropdown_UI <- function(id, dat) {
   ns <- NS(id)
  
   tagList(
-    column(
-      6,
-      h4("Select a vessel type"),
-      dropdown_input(ns("vessel_type"),
-                     ship_type_to_select,
-                     value = ship_type_to_select[1])
-    )
+   
+    h4("Select a vessel type"),
+    dropdown_input(ns("vessel_type"),
+                   ship_type_to_select,
+                   value = ship_type_to_select[1])
+    
   )
 }
 
@@ -39,7 +38,7 @@ dropdown_server <- function(id, dat) {
           
           vessel_to_select <-
             dat %>%
-            dplyr::filter(ship_type == input$vessel_type) %>%
+            dplyr::filter(ship_type == req(input$vessel_type)) %>%
             pull(Vessel) %>%
             unique()
           

@@ -15,9 +15,13 @@ dat_final_server <-
 
         # Get the final data -----------------------------------------------------
         final_dat <- reactive({
+          
+          
           final_dat <-
             dat %>%
-            filter(Vessel == req(input$vessel))
+            filter(
+              ship_type == req(input$vessel_type),
+              Vessel == req(input$vessel))
 
 
           return(final_dat)

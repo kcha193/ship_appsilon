@@ -13,46 +13,59 @@ if(length(new_pkg) > 0) {
 
 # Shiny app starts here ---------------------------------------------------
 
+library(ggplot2)
+library(plotly)
 library(shiny)
-library(shiny.semantic)
-library(semantic.dashboard)
 library(leaflet)
+library(semantic.dashboard)
+
 
 ships_fulldat <- readRDS("rds/ships_fulldat.rds")
 ships_stats_dat <- readRDS("rds/ships_stats_dat.rds")
 
+
 # Use the module in an application
 ui <- dashboardPage(
-  dashboardHeader(title = "Mapping", color = "blue"),
+  dashboardHeader( color = "black"),
   
   dashboardSidebar(disable = TRUE),
   dashboardBody(
+
+    h1("Shiny application showing the itineraries of different selected ships"),
+   
     
+    fluidRow(
+    column(width = 9,
+           box(
+             title = "Mapping ships' itinerary",
+             color = "blue",
+             ribbon = FALSE,
+             title_side = "top left",
+             width = 12,
+             fluidRow(
+               leafletOutput("map_out"),
+               plotlyOutput("line_plot")
+               
+             )
+             )
+           ),
+    
+    column(width = 3,
     # User input box for selecting vessel types and vessel names
-    box(
-      title = "Choose vessel types and vessel names",
-      color = "yellow",
-      ribbon = FALSE,
-      title_side = "top left",
-      width = 6,
-      fluidRow(
-        dropdown_UI("user_input", ships_stats_dat),
-        h4("Select a vessel"),
-        uiOutput("vessel_ui")
-      )
-    ), 
-    box(
-      title = "Mapping ships' itinerary",
-      color = "blue",
-      ribbon = FALSE,
-      title_side = "top left",
-      width = 12,
-      fluidRow(
-       leafletOutput("map_out")
+      box(
+        title = "Choose a vessel",
+        color = "yellow",
+        ribbon = FALSE,
+        title_side = "top left",
+        width = 12,
+        fluidRow(
+          dropdown_UI("user_input", ships_stats_dat),
+          h4("Select a vessel"),
+          uiOutput("vessel_ui")
+        )
       )
     )
-  )
-)
+    )))
 
 server <- function(input, output, session) {
   
@@ -77,6 +90,26 @@ server <- function(input, output, session) {
   
   
   
+  
+  
+# Plotting speed ---------------------------------------------------------
+  
+  output$line_plot <- 
+    renderPlotly({
+
+      g <- 
+        ggplot(data = dat_full_output(), aes(x = DATETIME, y = SPEED)) +
+        geom_path() + 
+        geom_point() + 
+        theme_classic() +
+        labs(title = "Showing the speed of selected ship over time", 
+             y = "Ship’s speed (in knots)",
+             x = "Date and time of the observation")
+        
+      ggplotly(g)
+    })
+  
+  
 # Mapping  ----------------------------------------------------------------
 
   output$map_out <-
@@ -85,7 +118,6 @@ server <- function(input, output, session) {
       dat_full_output <- req(dat_full_output())
       dat_stats_output <- req(dat_stats_output())
 
-      
       info <- paste0(
         "<H3>Ship infomation</H3>",
         "<strong>Vessel Name</strong>: ",
@@ -107,17 +139,17 @@ server <- function(input, output, session) {
         dat_stats_output$DESTINATION,
         "<br>",
         
-        # "<strong>Date time range</strong>: <br> ",
-        # format(
-        #   min(dat_stats_output$DATETIME, na.rm = TRUE),
-        #   "&nbsp &nbsp <B>Start</B>: %a %b/%d/%y %I:%M %p %Z"
-        # ),
-        # " - <br>",
-        # format(
-        #   max(dat_stats_output$DATETIME, na.rm = TRUE),
-        #   "&nbsp &nbsp <B>End</B>: %a %b/%d/%y %I:%M %p %Z"
-        # ),
-        # "<br>",
+        "<strong>Date time range</strong>: <br> ",
+        format(
+          min(as.POSIXct(dat_full_output$DATETIME), na.rm = TRUE),
+          "&nbsp &nbsp <B>Start</B>: %a %b/%d/%y %I:%M %p %Z"
+        ),
+        " - <br>",
+        format(
+          max(as.POSIXct(dat_full_output$DATETIME), na.rm = TRUE),
+          "&nbsp &nbsp <B>End</B>: %a %b/%d/%y %I:%M %p %Z"
+        ),
+        "<br>",
         
         "<strong>Max Distance</strong>: ",
         scales::comma(dat_stats_output$Distance_max,
