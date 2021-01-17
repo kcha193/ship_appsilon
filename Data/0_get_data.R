@@ -98,7 +98,7 @@ ships_stats_dat <-
 
 ships_fulldat <- 
   ships_fulldat %>%
-  select(LAT, LON, Vessel, ship_type, SPEED, DATETIME) 
+  select(LAT, LON, Vessel, ship_type, SPEED, DATETIME, is_parked) 
 
 
 # Save the data as an RDS file ---------------------------------------------------

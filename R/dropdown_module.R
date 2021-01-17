@@ -39,11 +39,12 @@ dropdown_server <- function(id, dat) {
           vessel_to_select <-
             dat %>%
             dplyr::filter(ship_type == req(input$vessel_type)) %>%
+            arrange(-Distance_max) %>% 
             pull(Vessel) %>%
             unique()
           
           dropdown_input(ns("vessel"), 
-                         vessel_to_select, value = vessel_to_select[1])
+                         sort(vessel_to_select), value = vessel_to_select[1])
         })
       
       
@@ -53,29 +54,4 @@ dropdown_server <- function(id, dat) {
   )
 }
 
-
-
-
-
-
-
-# Module definition, new method
-# dropdown_UI <- function(id, dat) {
-#   ship_type_to_select <- unique(dat$ship_type)
-#   
-#   
-#   
-#   tagList(
-#     column(
-#       6,
-#       h4("Select a vessel type"),
-#       selectVarInput(ns(id, "vessel_type"),
-#                      ship_type_to_select,
-#                      value = ship_type_to_select[1])
-#     ),
-#     column(6,
-#            h4("Select a vessel"),
-#            uiOutput(ns(id, "vessel_ui")))
-#   )
-# }
 
