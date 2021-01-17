@@ -67,11 +67,12 @@ dat$SHIPNAME[grep(". PRINCE OF WAVES", dat$SHIPNAME)] <- "PRINCE OF WAVES"
 dat$SHIPNAME[grep(".WLA-311", dat$SHIPNAME)] <- "WLA-311"
 
 
+# Ship data with full set of ships' latitude and longitude for mapping
 ships_fulldat <-
   dat %>%
-  mutate(Vessel = paste0(SHIPNAME)) %>%
+  mutate(Vessel = paste0(SHIPNAME, " (Ship_ID: ", SHIP_ID, ")")) %>%
   select(LAT, LON, Vessel, ship_type, DATETIME, SPEED, 
-         is_parked, FLAG) 
+         is_parked, FLAG, PORT, DESTINATION) 
 
 
 ships_stats_dat <-
@@ -89,6 +90,8 @@ ships_stats_dat <-
     Start_Lat = first(LAT),
     End_Lon = last(LON),
     End_Lat = last(LAT),
+    PORT = last(PORT),
+    DESTINATION = last(DESTINATION),
     .groups = "drop"
   )
   
