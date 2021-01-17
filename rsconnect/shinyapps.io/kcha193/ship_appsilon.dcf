@@ -5,9 +5,9 @@ account: kcha193
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3480932
-bundleId: 4106907
+bundleId: 4107212
 url: https://kcha193.shinyapps.io/ship_appsilon/
-when: 1610865404.56085
+when: 1610869156.00633
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .Rprofile|Data/0_get_data.R|Data/0_test_map.R|Doc/Doc_get_data.docx|Doc/Shiny Developer @Appsilon 04112020.docx

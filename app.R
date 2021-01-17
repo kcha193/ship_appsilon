@@ -44,7 +44,7 @@ ui <- dashboardPage(
              width = 12,
              fluidRow(
                
-               h3("Please click on the route for more information"),
+               strong(h3("Please click on the route for more information")),
                leafletOutput("map_out"),
                plotlyOutput("line_plot")
                

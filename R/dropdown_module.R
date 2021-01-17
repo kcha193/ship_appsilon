@@ -1,10 +1,7 @@
 
 
-
-library(shiny)
-library(shiny.semantic)
-library(semantic.dashboard)
-
+# This file contain the shiny module in the additional dropdown menu once the 
+# user has selected the type of the vessel
 
 
 # Module definition, new method
